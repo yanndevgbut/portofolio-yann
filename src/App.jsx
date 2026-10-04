@@ -30,11 +30,11 @@ export default function App() {
       gsap.to(bar, {
         width: '100%',
         ease: 'none',
-        scrollTrigger: { start: 0, end: 'max', scrub: 0.3 }
+        scrollTrigger: { start: 0, end: 'max', scrub: 0.2 }
       })
     }
 
-    // Fallback static
+    // Fallback static for reduced motion
     if (reduce) {
       document.querySelectorAll('.scene__story, .sec-title, .scene__kicker').forEach((el) => {
         el.style.opacity = '1'
@@ -61,10 +61,10 @@ export default function App() {
 
     const PIN = !isMobile
     const LEN = 0.55
-    const LEN_WORK = 0.7
-    const LEN_SQUAD = 0.85
-    const LEN_CONTACT = 0.7
-    const SCRUB = 0.5
+    const LEN_WORK = 0.65
+    const LEN_SQUAD = 0.8
+    const LEN_CONTACT = 0.55
+    const SCRUB = 0.3
 
     function hide(sel, vars) {
       document.querySelectorAll(sel).forEach((el) => gsap.set(el, vars))
@@ -84,9 +84,9 @@ export default function App() {
 
     const ctx = gsap.context(() => {
       // 序 PROLOG
-      hide('#prologTitle', { opacity: 0, y: 40 })
-      hide('#prologStory', { opacity: 0, y: 30 })
-      hide('#prologMoon', { opacity: 0, scale: 0.8, transformOrigin: 'center' })
+      hide('#prologTitle', { opacity: 0, y: 30 })
+      hide('#prologStory', { opacity: 0, y: 20 })
+      hide('#prologMoon', { opacity: 0, scale: 0.85, transformOrigin: 'center' })
       gsap.set('.prolog__seam', { opacity: 1 })
       gsap.set('.prolog__door--l', { xPercent: 0 })
       gsap.set('.prolog__door--r', { xPercent: 0 })
@@ -103,23 +103,24 @@ export default function App() {
         }
       })
       tlProlog
-        .to('.prolog__door--l', { xPercent: -92, ease: 'power2.inOut', duration: 1 })
-        .to('.prolog__door--r', { xPercent: 92, ease: 'power2.inOut', duration: 1 }, '<')
-        .to('.prolog__seam', { opacity: 0, duration: 0.3 }, '<50%')
-        .to('#prologMoon', { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.8 }, '<20%')
-        .to('#prologTitle', { opacity: 1, y: 0, duration: 0.6 }, '<15%')
-        .to('#prologStory', { opacity: 1, y: 0, duration: 0.6 }, '<40%')
+        .to('.prolog__door--l', { xPercent: -92, ease: 'power2.out', duration: 0.3 }, 0)
+        .to('.prolog__door--r', { xPercent: 92, ease: 'power2.out', duration: 0.3 }, 0)
+        .to('.prolog__seam', { opacity: 0, duration: 0.15 }, 0.1)
+        .to('#prologMoon', { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.25 }, 0.05)
+        .to('#prologTitle', { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' }, 0.1)
+        .to('#prologStory', { opacity: 1, y: 0, duration: 0.25, ease: 'power2.out' }, 0.15)
+        .to({}, { duration: 0.85 }) // hold state
 
       if (PIN) releasePin(tlProlog)
 
       // 一 HERO
-      hide('#heroNameA, #heroNameB', { opacity: 0, y: 60, clipPath: 'inset(0 0 100% 0)' })
-      hide('#heroStory', { opacity: 0, y: 26 })
-      hide('#heroCta', { opacity: 0, y: 26 })
-      hide('#heroMoon', { opacity: 0, y: 60, scale: 0.85 })
-      hide('#heroRocks .rock', { opacity: 0, y: 80 })
-      hide('#heroChar', { opacity: 0, y: 120, scale: 1.08 })
-      hide('#heroKanji', { opacity: 0, x: -80 })
+      hide('#heroNameA, #heroNameB', { opacity: 0, y: 40, clipPath: 'inset(0 0 100% 0)' })
+      hide('#heroStory', { opacity: 0, y: 20 })
+      hide('#heroCta', { opacity: 0, y: 20 })
+      hide('#heroMoon', { opacity: 0, y: 40, scale: 0.9 })
+      hide('#heroRocks .rock', { opacity: 0, y: 50 })
+      hide('#heroChar', { opacity: 0, y: 60, scale: 1.04 })
+      hide('#heroKanji', { opacity: 0, x: -50 })
 
       const tlHero = gsap.timeline({
         scrollTrigger: {
@@ -133,23 +134,24 @@ export default function App() {
         }
       })
       tlHero
-        .to('#heroMoon', { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power2.out' })
-        .to('#heroRocks .rock', { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out' }, '<')
-        .to('#heroChar', { opacity: 1, y: 0, scale: 1, duration: 0.9, ease: 'power3.out' }, '<25%')
-        .to('#heroKanji', { opacity: 1, x: 0, duration: 0.7, ease: 'power2.out' }, '<20%')
-        .to('#heroNameA', { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.55, ease: 'power2.out' }, '<20%')
-        .to('#heroNameB', { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.55, ease: 'power2.out' }, '<25%')
-        .to('#heroStory', { opacity: 1, y: 0, duration: 0.45 }, '<35%')
-        .to('#heroCta', { opacity: 1, y: 0, duration: 0.45 }, '<25%')
+        .to('#heroMoon', { opacity: 1, y: 0, scale: 1, duration: 0.25, ease: 'power2.out' }, 0)
+        .to('#heroRocks .rock', { opacity: 1, y: 0, duration: 0.25, stagger: 0.04, ease: 'power2.out' }, 0.02)
+        .to('#heroChar', { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: 'power3.out' }, 0.05)
+        .to('#heroKanji', { opacity: 1, x: 0, duration: 0.25, ease: 'power2.out' }, 0.05)
+        .to('#heroNameA', { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.25, ease: 'power2.out' }, 0.08)
+        .to('#heroNameB', { opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)', duration: 0.25, ease: 'power2.out' }, 0.12)
+        .to('#heroStory', { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' }, 0.15)
+        .to('#heroCta', { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' }, 0.18)
+        .to({}, { duration: 0.85 }) // hold state
 
       if (PIN) releasePin(tlHero)
 
       // 二 ABOUT
-      hide('#aboutTitle', { opacity: 0, y: 36 })
-      hide('#aboutStory', { opacity: 0, y: 26 })
-      hide('#aboutDoc .about__doc-line', { opacity: 0, x: 24 })
-      hide('#aboutList li', { opacity: 0, y: 18 })
-      hide('#aboutChar', { opacity: 0, x: 110 })
+      hide('#aboutTitle', { opacity: 0, y: 30 })
+      hide('#aboutStory', { opacity: 0, y: 20 })
+      hide('#aboutDoc .about__doc-line', { opacity: 0, x: 20 })
+      hide('#aboutList li', { opacity: 0, y: 15 })
+      hide('#aboutChar', { opacity: 0, x: 60 })
       gsap.set('#aboutDoc', { transformOrigin: 'left center' })
 
       const tlAbout = gsap.timeline({
@@ -164,20 +166,21 @@ export default function App() {
         }
       })
       tlAbout
-        .to('#aboutChar', { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' })
-        .to('#aboutTitle', { opacity: 1, y: 0, duration: 0.45 }, '<20%')
-        .to('#aboutStory', { opacity: 1, y: 0, duration: 0.45 }, '<30%')
-        .fromTo('#aboutDoc', { scaleX: 0.92, opacity: 0.7 }, { scaleX: 1, opacity: 1, duration: 0.5, ease: 'power2.out' }, '<20%')
-        .to('#aboutDoc .about__doc-line', { opacity: 1, x: 0, duration: 0.45, stagger: 0.15 }, '<30%')
-        .to('#aboutList li', { opacity: 1, y: 0, duration: 0.35, stagger: 0.08 }, '<40%')
+        .to('#aboutChar', { opacity: 1, x: 0, duration: 0.3, ease: 'power3.out' }, 0)
+        .to('#aboutTitle', { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' }, 0.05)
+        .to('#aboutStory', { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' }, 0.1)
+        .fromTo('#aboutDoc', { scaleX: 0.95, opacity: 0.7 }, { scaleX: 1, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.1)
+        .to('#aboutDoc .about__doc-line', { opacity: 1, x: 0, duration: 0.22, stagger: 0.05 }, 0.15)
+        .to('#aboutList li', { opacity: 1, y: 0, duration: 0.2, stagger: 0.03 }, 0.18)
+        .to({}, { duration: 0.85 }) // hold state
 
       if (PIN) releasePin(tlAbout)
 
       // 三 WORK
-      hide('#workTitle', { opacity: 0, y: 36 })
-      hide('#workStory', { opacity: 0, y: 26 })
-      hide('#skillsGrid .skill-card', { opacity: 0, y: 40 })
-      hide('#projectsGrid .proj', { opacity: 0, x: 60 })
+      hide('#workTitle', { opacity: 0, y: 30 })
+      hide('#workStory', { opacity: 0, y: 20 })
+      hide('#skillsGrid .skill-card', { opacity: 0, y: 30 })
+      hide('#projectsGrid .proj', { opacity: 0, x: 40 })
 
       const tlWork = gsap.timeline({
         scrollTrigger: {
@@ -191,10 +194,11 @@ export default function App() {
         }
       })
       tlWork
-        .to('#workTitle', { opacity: 1, y: 0, duration: 0.45 })
-        .to('#workStory', { opacity: 1, y: 0, duration: 0.45 }, '<30%')
-        .to('#skillsGrid .skill-card', { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'power2.out' }, '<20%')
-        .to('#projectsGrid .proj', { opacity: 1, x: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out' }, '<35%')
+        .to('#workTitle', { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, 0)
+        .to('#workStory', { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, 0.05)
+        .to('#skillsGrid .skill-card', { opacity: 1, y: 0, duration: 0.25, stagger: 0.04, ease: 'power2.out' }, 0.08)
+        .to('#projectsGrid .proj', { opacity: 1, x: 0, duration: 0.25, stagger: 0.04, ease: 'power3.out' }, 0.14)
+        .to({}, { duration: 0.85 }) // hold state
 
       if (PIN) releasePin(tlWork)
 
@@ -231,36 +235,36 @@ export default function App() {
             if (fig) {
               gsap.fromTo(
                 fig,
-                { y: 60, opacity: 0, scale: 1.04 },
+                { y: 40, opacity: 0, scale: 1.02 },
                 {
                   y: 0,
                   opacity: 1,
                   scale: 1,
-                  duration: 0.8,
+                  duration: 0.6,
                   ease: 'power3.out',
-                  scrollTrigger: { trigger: p, start: 'top 80%', once: true }
+                  scrollTrigger: { trigger: p, start: 'top 85%', once: true }
                 }
               )
             }
             if (info) {
               gsap.fromTo(
                 info,
-                { y: 30, opacity: 0 },
+                { y: 20, opacity: 0 },
                 {
                   y: 0,
                   opacity: 1,
-                  duration: 0.7,
-                  delay: 0.1,
+                  duration: 0.5,
+                  delay: 0.08,
                   ease: 'power2.out',
-                  scrollTrigger: { trigger: p, start: 'top 80%', once: true }
+                  scrollTrigger: { trigger: p, start: 'top 85%', once: true }
                 }
               )
             }
           })
         } else {
           panels.forEach((p, i) => {
-            gsap.set(p.querySelector('.squad__fig'), { y: 120, opacity: i === 0 ? 1 : 0, scale: 1.05 })
-            gsap.set(p.querySelector('.squad__info'), { y: 40, opacity: i === 0 ? 1 : 0 })
+            gsap.set(p.querySelector('.squad__fig'), { y: 60, opacity: i === 0 ? 1 : 0, scale: 1.03 })
+            gsap.set(p.querySelector('.squad__info'), { y: 30, opacity: i === 0 ? 1 : 0 })
           })
 
           const tlSquad = gsap.timeline({
@@ -269,7 +273,7 @@ export default function App() {
               start: 'top top',
               end: `+=${window.innerHeight * (total * LEN_SQUAD)}`,
               pin: true,
-              scrub: SCRUB,
+              scrub: 0.2,
               anticipatePin: 1,
               invalidateOnRefresh: true,
               onUpdate: (self) => {
@@ -287,13 +291,13 @@ export default function App() {
             const info = p.querySelector('.squad__info')
             if (i === 0) {
               tlSquad
-                .to(fig, { y: 0, scale: 1, duration: 0.45, ease: 'power3.out' }, 0)
-                .to(info, { y: 0, duration: 0.35, ease: 'power2.out' }, 0.08)
+                .to(fig, { y: 0, scale: 1, duration: 0.2, ease: 'power3.out' }, 0)
+                .to(info, { y: 0, duration: 0.15, ease: 'power2.out' }, 0.05)
             } else {
-              const start = i - 0.5
+              const start = i - 0.7
               tlSquad
-                .to(fig, { y: 0, opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' }, start)
-                .to(info, { y: 0, opacity: 1, duration: 0.35, ease: 'power2.out' }, start + 0.12)
+                .to(fig, { y: 0, opacity: 1, scale: 1, duration: 0.2, ease: 'power3.out' }, start)
+                .to(info, { y: 0, opacity: 1, duration: 0.15, ease: 'power2.out' }, start + 0.05)
             }
           })
 
@@ -313,10 +317,10 @@ export default function App() {
       }
 
       // 終 CONTACT
-      hide('#contactTitle', { opacity: 0, y: 36 })
-      hide('#contactStory', { opacity: 0, y: 26 })
-      hide('#contactForm .field, #contactForm button', { opacity: 0, y: 22 })
-      hide('#contactChar', { opacity: 0, x: 110 })
+      hide('#contactTitle', { opacity: 0, y: 30 })
+      hide('#contactStory', { opacity: 0, y: 20 })
+      hide('#contactForm .field, #contactForm button', { opacity: 0, y: 20 })
+      hide('#contactChar', { opacity: 0, x: 60 })
 
       const tlContact = gsap.timeline({
         scrollTrigger: {
@@ -330,10 +334,11 @@ export default function App() {
         }
       })
       tlContact
-        .to('#contactChar', { opacity: 1, x: 0, duration: 0.85, ease: 'power3.out' })
-        .to('#contactTitle', { opacity: 1, y: 0, duration: 0.45 }, '<20%')
-        .to('#contactStory', { opacity: 1, y: 0, duration: 0.45 }, '<30%')
-        .to('#contactForm .field, #contactForm button', { opacity: 1, y: 0, duration: 0.45, stagger: 0.08 }, '<25%')
+        .to('#contactChar', { opacity: 1, x: 0, duration: 0.25, ease: 'power3.out' }, 0)
+        .to('#contactTitle', { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, 0.04)
+        .to('#contactStory', { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, 0.08)
+        .to('#contactForm .field, #contactForm button', { opacity: 1, y: 0, duration: 0.22, stagger: 0.03 }, 0.1)
+        .to({}, { duration: 0.85 }) // hold state
 
       if (PIN) releasePin(tlContact)
     })
