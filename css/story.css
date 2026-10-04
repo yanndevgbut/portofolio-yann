@@ -1,0 +1,234 @@
+/* =========================================================
+   STORY.CSS — lapisan scroll story "Perjalanan Mato"
+   (dipakai bersama style.css)
+   ========================================================= */
+
+/* ---------- SCENE DASAR ---------- */
+.scene { position: relative; z-index: 1; overflow: hidden; }
+.scene__kicker {
+  display: inline-block; font-size: .7rem; letter-spacing: 5px;
+  color: var(--blood); text-transform: uppercase; margin-bottom: 18px;
+  padding-left: 42px; position: relative;
+}
+.scene__kicker::before {
+  content: ''; position: absolute; left: 0; top: 50%; width: 30px; height: 1px;
+  background: var(--blood);
+}
+.scene__story {
+  color: var(--ash); font-size: clamp(1rem, 2.4vw, 1.18rem); line-height: 1.9;
+  max-width: 560px; margin-top: 22px;
+}
+.scene__story em { color: var(--blood); font-weight: 600; }
+
+/* ---------- CHAPTER INDICATOR ---------- */
+.chapters {
+  position: fixed; right: clamp(10px, 2.5vw, 26px); top: 50%;
+  transform: translateY(-50%); z-index: 800;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.chapters__item {
+  font-family: var(--font-display); font-size: .95rem; color: rgba(138,133,120,.4);
+  transition: color .4s, transform .4s, text-shadow .4s; cursor: default;
+}
+.chapters__item.is-on { color: var(--crimson); transform: scale(1.5); text-shadow: 0 0 16px rgba(224,35,74,.8); }
+
+/* ---------- GLITCH DIVIDER ---------- */
+.glitch-divider {
+  height: 3px; position: relative; z-index: 5;
+  background: linear-gradient(90deg, transparent, var(--blood) 20%, var(--crimson) 50%, var(--blood) 80%, transparent);
+  animation: glitchLine 4s steps(1) infinite;
+}
+@keyframes glitchLine {
+  0%, 92% { opacity: .3; transform: scaleX(.4); }
+  93% { opacity: 1; transform: scaleX(1) translateY(-2px); }
+  94% { opacity: .6; transform: scaleX(.7) translateY(1px); }
+  95% { opacity: 1; transform: scaleX(1); }
+  96%, 100% { opacity: .3; transform: scaleX(.4); }
+}
+
+/* ---------- 序 PROLOG ---------- */
+.scene--prolog {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: #060608;
+}
+.prolog__gate {
+  position: absolute; inset: 0; z-index: 1; display: flex;
+  pointer-events: none;
+}
+.prolog__door {
+  width: 50%; height: 100%;
+  background:
+    linear-gradient(180deg, #20060b, #0a0305),
+    repeating-linear-gradient(90deg, rgba(179,18,47,.22) 0 2px, transparent 2px 26px);
+  border: 1px solid var(--line-2);
+}
+.prolog__seam {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 3px; transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent, var(--crimson), transparent);
+  box-shadow: 0 0 40px 8px rgba(224,35,74,.9); opacity: 0;
+}
+.prolog__moon {
+  position: absolute; top: 12%; left: 50%; transform: translateX(-50%);
+  width: clamp(180px, 30vw, 340px); aspect-ratio: 1; border-radius: 50%; z-index: 0;
+  background: radial-gradient(circle at 38% 34%, #ff6a5a 0%, #c81d3d 42%, #6d0c22 72%, #2a0710 100%);
+  box-shadow: 0 0 140px 40px rgba(200,29,61,.4), inset -30px -20px 60px rgba(0,0,0,.6);
+  opacity: 0;
+}
+.prolog__inner { text-align: center; z-index: 2; }
+.prolog .scene__title, .scene__title {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(2.6rem, 11vw, 6.2rem); line-height: .95; letter-spacing: 2px;
+}
+
+/* ---------- 一 HERO (scene) ---------- */
+.scene--hero { min-height: 100vh; display: flex; align-items: center; padding-top: 90px; }
+.scene--hero .hero__inner { position: relative; z-index: 3; }
+.hero__char { will-change: transform, opacity; }
+.hero__kanji {
+  position: absolute; z-index: 0; bottom: 8%; left: -4%;
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(4rem, 14vw, 9rem); letter-spacing: 18px;
+  color: rgba(179,18,47,.08); white-space: nowrap; pointer-events: none;
+  user-select: none;
+}
+.mdf-emblem {
+  position: absolute; z-index: 2; top: 100px; right: clamp(16px, 4vw, 48px);
+  opacity: .6; pointer-events: none;
+  animation: emblemSpin 28s linear infinite;
+}
+@keyframes emblemSpin { to { transform: rotate(360deg); } }
+
+/* ---------- 二 ABOUT (scene) ---------- */
+.scene--about {
+  min-height: 100vh; display: flex; align-items: center; padding: 120px 0;
+  background: linear-gradient(180deg, transparent, rgba(8,8,10,.6) 30%, rgba(8,8,10,.85));
+}
+.scene--about .about__inner { position: relative; z-index: 3; max-width: 600px; }
+.scene--about .about__char {
+  position: absolute; right: 0; bottom: 0; z-index: 4;
+  width: min(36vw, 400px); pointer-events: none;
+}
+.about__doc { will-change: transform; }
+
+/* ---------- 三 WORK (scene) ---------- */
+.scene--work { padding: 120px 0 140px; background: rgba(6,6,8,.7); }
+.scene--work .skills__grid { margin-top: 40px; }
+.scene--work .projects__grid { margin-top: 60px; }
+
+/* ---------- 四 SQUAD (HORIZONTAL CINEMATIC) ---------- */
+.scene--squad { height: 100vh; }
+.squad__stage { position: relative; width: 100%; height: 100%; overflow: hidden; background: #060608; }
+.squad__bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(70% 60% at 70% 30%, rgba(179,18,47,.35), transparent 60%),
+    radial-gradient(50% 45% at 20% 80%, rgba(60,18,40,.4), transparent 62%),
+    #060608;
+  transition: background .6s;
+}
+.squad__kanji {
+  position: absolute; z-index: 1; top: 14%; left: 50%; transform: translateX(-50%);
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 5rem); letter-spacing: 12px;
+  color: rgba(232,224,213,.06); white-space: nowrap; pointer-events: none;
+}
+.squad__track {
+  position: absolute; inset: 0; z-index: 2; display: flex;
+  width: 400%; /* 4 panel x 100% */
+  will-change: transform;
+}
+.squad__panel {
+  position: relative; width: 25%; height: 100%;
+  display: flex; align-items: flex-end; justify-content: flex-start;
+  flex-shrink: 0; overflow: hidden;
+}
+.squad__fig {
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-55%);
+  width: min(42vh, 420px); z-index: 2;
+}
+.squad__fig img {
+  width: 100%; height: auto; object-fit: contain;
+  filter: drop-shadow(0 24px 60px rgba(0,0,0,.85)) contrast(1.05) saturate(1.05);
+  -webkit-mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 78%, transparent 100%);
+}
+.squad__info {
+  position: relative; z-index: 3; margin: 0 0 18% clamp(18px, 6vw, 90px);
+  max-width: 320px;
+  background: rgba(8,8,10,.55); border-left: 2px solid var(--blood);
+  padding: 18px 22px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.squad__squad {
+  display: inline-block; font-size: .6rem; letter-spacing: 3px; color: #fff;
+  background: var(--blood); padding: 4px 10px; margin-bottom: 10px;
+}
+.squad__name { font-family: var(--font-display); font-size: clamp(1.4rem, 4vw, 2.2rem); margin-bottom: 4px; }
+.squad__role { color: var(--crimson); font-size: .88rem; letter-spacing: 1px; margin-bottom: 12px; }
+.squad__abil { font-size: .9rem; color: var(--ash); }
+.squad__abil span { display: inline-block; margin-right: 6px; font-size: .6rem; letter-spacing: 2px; color: var(--gold); }
+
+/* tema per panel */
+.squad__panel[data-theme="crimson"] .squad__info { border-left-color: #e0234a; }
+.squad__panel[data-theme="blood"] .squad__info { border-left-color: #b3122f; }
+.squad__panel[data-theme="amber"] .squad__info { border-left-color: #c9a24b; }
+.squad__panel[data-theme="violet"] .squad__info { border-left-color: #8b5a9e; }
+.squad__panel[data-theme="crimson"] .squad__squad { background: #e0234a; }
+.squad__panel[data-theme="blood"] .squad__squad { background: #b3122f; }
+.squad__panel[data-theme="amber"] .squad__squad { background: #c9a24b; color: #1a1408; }
+.squad__panel[data-theme="violet"] .squad__squad { background: #8b5a9e; }
+
+.squad__head { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); z-index: 5; width: min(1180px, 90vw); }
+.squad__progress {
+  position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+  width: min(320px, 60vw); height: 3px; z-index: 5;
+  background: rgba(179,18,47,.2);
+}
+.squad__progress span {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--blood), var(--crimson));
+  box-shadow: 0 0 12px rgba(224,35,74,.8);
+}
+.squad__counter {
+  position: absolute; bottom: 18px; right: clamp(18px, 4vw, 50px); z-index: 5;
+  font-family: var(--font-display); font-size: .85rem; letter-spacing: 3px; color: var(--ash);
+}
+.squad__counter span { color: var(--crimson); font-size: 1.15rem; }
+
+/* ---------- 終 CONTACT (scene) ---------- */
+.scene--contact {
+  min-height: 100vh; display: flex; align-items: center; padding: 120px 0 100px;
+  background: linear-gradient(180deg, rgba(6,6,8,.8), #0a0a0c);
+}
+.scene--contact .contact__inner { position: relative; z-index: 3; max-width: 520px; }
+.scene--contact .contact__form { margin-top: 30px; }
+.scene--contact .contact__char {
+  position: absolute; right: 0; bottom: 0; z-index: 4;
+  width: min(26vw, 320px); pointer-events: none;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 1024px) {
+  .scene--about .about__char { width: min(34vw, 300px); opacity: .55; }
+  .scene--contact .contact__char { width: min(26vw, 240px); opacity: .5; }
+  .mdf-emblem { opacity: .35; }
+}
+@media (max-width: 767px) {
+  .chapters { display: none; }
+  /* squad: kembalikan ke alur dokumen (stage/track/panel relative) */
+  .scene--squad { height: auto; min-height: 0; }
+  .squad__stage { height: auto; overflow: visible; }
+  .squad__track { position: relative; inset: auto; width: 100%; display: block; }
+  .squad__panel {
+    position: relative; width: 100%; height: auto; min-height: 70vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 90px 0 90px;
+  }
+  .squad__fig { position: relative; left: auto; transform: none; width: min(62vw, 300px); margin: 0 auto; }
+  .squad__info { position: relative; margin: -40px 14px 0; max-width: none; }
+  .squad__head { position: relative; top: auto; left: auto; transform: none; margin: 0 auto 10px; }
+  .squad__progress, .squad__counter { display: none; }
+  .squad__kanji { position: relative; top: auto; left: auto; transform: none; text-align: center; margin: 0 auto; }
+  .hero__kanji { font-size: clamp(3rem, 18vw, 5rem); opacity: .5; }
+  .scene--about .about__char { width: min(44vw, 220px); opacity: .4; }
+  .scene--contact .contact__char { width: min(40vw, 200px); opacity: .38; }
+}
